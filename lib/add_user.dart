@@ -76,7 +76,7 @@ class _AddUserState extends State<AddUser> {
                     },
                   ),
                   SizedBox(height: 20.0,),
-                  ElevatedButton(
+         /*         ElevatedButton(
                     child: Text('Update'),
                     onPressed: (){
                       homeController.updateData("Suzana", "Developer", 3);
@@ -88,7 +88,7 @@ class _AddUserState extends State<AddUser> {
                     onPressed: (){
                       homeController.deleteData(3);
                     },
-                  ),
+                  ),*/
 
 
 
