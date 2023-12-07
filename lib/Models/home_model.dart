@@ -1,24 +1,32 @@
 class HomePostModel {
-  int? userId;
-  int? id;
-  String? title;
-  String? body;
 
-  HomePostModel({this.userId, this.id, this.title, this.body});
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? avatar;
+
+  HomePostModel({ this.id, this.firstName,this.lastName, this.email, this.avatar});
 
   HomePostModel.fromJson(Map<String, dynamic> json) {
-    userId = json['userId'];
+
     id = json['id'];
-    title = json['title'];
-    body = json['body'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
+    email = json['email'];
+    avatar = json['avatar'];
+
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userId'] = this.userId;
+
     data['id'] = this.id;
-    data['title'] = this.title;
-    data['body'] = this.body;
+    data['first_name'] = this.firstName;
+    data['last_name'] = this.lastName;
+    data['email'] = this.email;
+    data['avatar'] = this.avatar;
+
     return data;
   }
 }

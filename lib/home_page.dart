@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('JSON Data'),
+        title: Text('Assignment 18-19'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

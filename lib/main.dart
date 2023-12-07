@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapp_json/home_page.dart';
+import 'package:myapp_json/add_user.dart';
+import 'package:myapp_json/default_page.dart';
 
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage()
+      home: DefaultPage()
     );
   }
 }
