@@ -4,7 +4,7 @@ import 'package:myapp_json/Controllers/home_controller.dart';
 
 import 'package:myapp_json/Models/home_model.dart';
 
-import 'add_user.dart';
+import 'package:myapp_json/add_user.dart';
 
 class UserList extends StatefulWidget {
     UserList({Key? key}) : super(key: key);
@@ -35,7 +35,14 @@ class _UserListState extends State<UserList> {
               itemBuilder: (context,index){
                 HomePostModel data= homeController.list[index];
                 return Card(
-                  child: ListTile(leading: Text(data.id.toString()),
+                  child: ListTile(leading:
+                  CircleAvatar(
+                    radius: 28,
+                    backgroundImage: NetworkImage(
+                        data.avatar.toString()
+                    ),
+                  ),
+
                     title:  Text("${data.firstName.toString()}  ${data.lastName.toString()}"),
                     subtitle:  Text(data.email.toString()),
                     trailing: Container(
@@ -46,7 +53,7 @@ class _UserListState extends State<UserList> {
                           InkWell(
                             onTap: (){
                              // _updateDialogue(context, index);
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AddUser())) ;
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AddUser(user: data))) ;
                             },
                             child: Icon(Icons.edit),
                           ),

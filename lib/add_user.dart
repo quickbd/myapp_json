@@ -5,78 +5,89 @@ import 'package:myapp_json/Controllers/home_controller.dart';
 import 'package:myapp_json/Models/home_model.dart';
 import 'package:myapp_json/user_list.dart';
 
-class AddUser extends StatefulWidget {
-  AddUser({Key? key}) : super(key: key);
+class AddUser extends StatelessWidget {
+  final HomePostModel? user; // Change parameter name to user
+  final TextEditingController nameCrt = TextEditingController();
+  final TextEditingController jobCrt = TextEditingController();
 
-  @override
-  State<AddUser> createState() => _AddUserState();
-}
+  AddUser({Key? key, this.user}) : super(key: key);
 
-class _AddUserState extends State<AddUser> {
   HomeController homeController = Get.put(HomeController());
 
-
-@override
+  @override
   Widget build(BuildContext context) {
-  var nameCrt = TextEditingController();
-  var jobCrt = TextEditingController();
-  final _key = GlobalKey<FormState>();
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Add User'),
-      ),
-      body:  Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: 300,
-            child: Form(
-              key:_key,
-              child: Column(
+    if (user != null) {
+      nameCrt.text = user!.firstName ?? '';
+      jobCrt.text = user!.lastName ?? '';
+    }
 
-                children: [
-                  Text('Add/Edit User'),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "Name"
+    final _key = GlobalKey<FormState>();
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Add User'),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: 300,
+              child: Form(
+                key: _key,
+                child: Column(
+                  children: [
+                    Text('Add/Edit User'),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Name"),
+                      controller: nameCrt,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Enter Name";
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
-                    controller: nameCrt,
-                    validator: (value){
-                      if(value!.isEmpty ){
-                        return "Enter Name";
-                      }else{
-                        return null;
-                      }
-                    },
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Job"
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Job"),
+                      controller: jobCrt,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Enter Job";
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
-                    controller: jobCrt,
-                    validator: (value){
-                      if(value!.isEmpty ){
-                        return "Enter Job";
-                      }else{
-                        return null;
-                      }
-                    },
-                  ),
-                  SizedBox(height: 20.0,),
-                  ElevatedButton(
-                    child: Text('Submit'),
-                    onPressed: (){
-                    if(_key.currentState!.validate()) {
-                      _key.currentState!.save();
-                      print(nameCrt.toString());
-                      homeController.postData(nameCrt.toString(), jobCrt.toString());
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>UserList()));
-                    }
-                    },
-                  ),
-                  SizedBox(height: 20.0,),
-         /*         ElevatedButton(
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    ElevatedButton(
+                      child: Text(user != null ? 'Update' : 'Submit'),
+                      onPressed: () {
+                        if (_key.currentState!.validate()) {
+                          _key.currentState!.save();
+                          print(nameCrt.toString());
+
+                          if (user != null) {
+                            homeController.updateData(nameCrt.toString(),
+                                jobCrt.toString(), user!.id?? 0);
+                          } else {
+                            homeController.postData(
+                                nameCrt.toString(), jobCrt.toString());
+                          }
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserList()));
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    /*         ElevatedButton(
                     child: Text('Update'),
                     onPressed: (){
                       homeController.updateData("Suzana", "Developer", 3);
@@ -89,15 +100,11 @@ class _AddUserState extends State<AddUser> {
                       homeController.deleteData(3);
                     },
                   ),*/
-
-
-
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      )
-    );
+        ));
   }
 }
